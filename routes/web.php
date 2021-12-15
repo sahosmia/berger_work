@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DiarieController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\PortfolioController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\CounterController;
 use App\Http\Controllers\FrontendController;
@@ -35,6 +36,15 @@ Route::get('/gallery', [FrontendController::class, 'gallery'])->name('gallery');
 
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
+// profile
+Route::get('/admin/edit_profile', [ProfileController::class, 'edit_profile'])->name('admin.edit_profile');
+Route::post('/admin/profile_name_update', [ProfileController::class, 'profile_name_update'])->name('admin.profile_name_update');
+Route::post('/admin/profile_email_update', [ProfileController::class, 'profile_email_update'])->name('admin.profile_email_update');
+Route::post('/admin/profile_password_update', [ProfileController::class, 'profile_password_update'])->name('admin.profile_password_update');
+
+
 
 
 // logo
@@ -69,6 +79,7 @@ Route::get('/admin/diarie_action/{id}', [DiarieController::class, 'action'])->na
 
 // language
 Route::get('/admin/language', [LanguageController::class, 'index'])->name('admin.language');
+Route::post('/admin/language_update', [LanguageController::class, 'language_update'])->name('admin.language_update');
 
 
 

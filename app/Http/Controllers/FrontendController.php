@@ -16,12 +16,11 @@ class FrontendController extends Controller
 {
     public function index(){
         return view('frontend', [
-            'logo' => Logo::find(1),
+
             'sliders' => Slider::where('action', 1)->get(),
             'diarie' => Diarie::where('action', 1)->get(),
             'portfolio' => Portfolio::all(),
             'counter' => Counter::all(),
-            'social' => Social::where('social_value', '!=', "")->get(),
         ]);
     }
 
@@ -51,40 +50,20 @@ class FrontendController extends Controller
     }
 
     public function contact_us(){
-        return view('contact_us', [
-            'logo' => Logo::find(1),
-            'diarie' => Diarie::where('action', 1)->get(),
-            'social' => Social::where('social_value', '!=', "")->get(),
-        ]);
+        return view('contact_us', []);
     }
 
     public function md_speech(){
-        return view('md_speech', [
-            'logo' => Logo::find(1),
-            'diarie' => Diarie::where('action', 1)->get(),
-            'social' => Social::where('social_value', '!=', "")->get(),
-        ]);
+        return view('md_speech', []);
     }
     public function chairman_speech(){
-        return view('chairman_speech', [
-            'logo' => Logo::find(1),
-            'diarie' => Diarie::where('action', 1)->get(),
-            'social' => Social::where('social_value', '!=', "")->get(),
-        ]);
+        return view('chairman_speech', []);
     }
     public function gallery(){
-        return view('gallery', [
-            'logo' => Logo::find(1),
-            'diarie' => Diarie::where('action', 1)->get(),
-            'social' => Social::where('social_value', '!=', "")->get(),
-        ]);
+        return view('gallery', []);
     }
     public function about(){
-        return view('about', [
-            'logo' => Logo::find(1),
-            'diarie' => Diarie::where('action', 1)->get(),
-            'social' => Social::where('social_value', '!=', "")->get(),
-        ]);
+        return view('about', []);
     }
 
 }

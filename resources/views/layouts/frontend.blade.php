@@ -1,5 +1,8 @@
 
+@php
+    $logo = App\Models\Logo::find(1);
 
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,24 +37,24 @@
 
                         <div class="menu">
                             <ul>
-                                <li><a class="@yield('home')" href="#">Home</a></li>
-                                <li><a href="#">Service</a>
+                                <li><a class="@yield('home')" href="#">{{ HOME }}</a></li>
+                                <li><a href="#">{{ SERVICE }}</a>
                                     <ul class="drop_down">
                                         @foreach ($diarie as $item)
                                         <li><a href="#">{{ $item->title }}</a></li>
                                         @endforeach
                                     </ul>
                                 </li>
-                                <li><a class="@yield('portfolio')" href="">portfolio</a></li>
-                                <li><a class="@yield('corporate_speech')" href="#">cororate speech</a>
+                                <li><a class="@yield('portfolio')" href="">{{ PORTFOLIO }}</a></li>
+                                <li><a class="@yield('corporate_speech')" href="#">{{ CORPORATE_SPEECH }}</a>
                                     <ul class="drop_down">
-                                        <li><a href="{{ route('md_speech') }}">Md Speech</a></li>
-                                        <li><a href="{{ route('chairman_speech') }}">Chairmain Speech</a></li>
+                                        <li><a href="{{ route('md_speech') }}">{{ MD_SPEECH }}</a></li>
+                                        <li><a href="{{ route('chairman_speech') }}">{{ CHAIRMAN_SPEECH }}</a></li>
                                     </ul>
                                 </li>
-                                <li><a class="@yield('gallery')" href="{{ route('gallery') }}">Gallery</a></li>
-                                <li><a class="@yield('about')" href="{{ route('about') }}">about</a></li>
-                                <li><a class="@yield('contact_us')" href="{{ route('contact_us') }}">contact us</a></li>
+                                <li><a class="@yield('gallery')" href="{{ route('gallery') }}">{{ GALLERY }}</a></li>
+                                <li><a class="@yield('about')" href="{{ route('about') }}">{{ ABOUT }}</a></li>
+                                <li><a class="@yield('contact_us')" href="{{ route('contact_us') }}">{{ CONTACT_US }}</a></li>
                             </ul>
                         </div>
 
@@ -59,7 +62,7 @@
 							<i class="fas fa-search"></i>
                             <div class="search_input">
                                 <form>
-                                    <input type="text" placeholder="Search...">
+                                    <input type="text" placeholder="{{ SEARCH }}">
                                 </form>
                             </div>
 						</div>
@@ -81,12 +84,12 @@
             <div class="row footer_content">
                 <div class="col-lg-3 col-sm-6 col-xm-12">
                     <img src="{{ asset('uploads/logo') }}/{{ $logo->logo }}" alt="header_logo">
-                    <h4 class="footer_title">Stay connected with us</h4>
-                    <p>Subscribe to stay updated</p>
+                    <h4 class="footer_title">{{ STAY_CONNECTED_WITH_US }}</h4>
+                    <p>{{ SUBSCRIBE_TO_STAY_UPDATED }}</p>
                     <input class="input" type="text" placeholder="Enter Your Email Address">
                 </div>
                 <div class="col-lg-3 col-sm-6 col-xm-12">
-                    <h4 class="footer_title">About Us</h4>
+                    <h4 class="footer_title">{{ ABOUT_US }}</h4>
                     <ul class="link">
                         <li><a href="#">Company Profile</a></li>
                         <li><a href="#">Board of Directors</a></li>
@@ -133,8 +136,8 @@
                 </div>
 
                 <div class="col-lg-6  text-end">
-                    <p class=" d-inline">© 2018 Shoma. All Rights Reserved</p>
-                    <p class=" d-inline">Developed By <a href="#">KAZ Software</a></p>
+                    <p class=" d-inline">{{ FOOTER_COPY }}</p>
+                    <p class=" d-inline">{{ DEVELOPED_BY }} <a href="#">KAZ Software</a></p>
                 </div>
             </div>
         </div>

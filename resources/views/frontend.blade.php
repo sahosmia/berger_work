@@ -1,5 +1,7 @@
 @extends('layouts.frontend')
-
+@section('home')
+active
+@endsection
 @section('content')
  <!-- banner pert start  -->
  <div class="banner">
@@ -154,30 +156,29 @@
             <form class="row g-3" action="{{ route('contact') }}" method="POST">
                 @csrf
                 <div class="col-md-6">
-                    <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="Your Full Name">
+                    <label class="form-label">{{ NAME }}</label>
+                    <input type="text" class="form-control" name="name" placeholder="{{ YOUR_NAME }}">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" name="phone" placeholder="0123">
+                    <label class="form-label">{{ PHONE }}</label>
+                    <input type="text" class="form-control" name="phone" placeholder="{{ YOUR_PHONE }}">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Email Address</label>
-                    <input type="text" class="form-control" name="email" placeholder="Your Email Address">
+                    <label class="form-label">{{ EMAIL_ADDRESS }}</label>
+                    <input type="text" class="form-control" name="email" placeholder="{{ YOUR_EMAIL_ADDRESS }}">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Address</label>
-                    <input type="text" class="form-control" name="address" placeholder="Your Address">
+                    <label class="form-label">{{ ADDRESS }}</label>
+                    <input type="text" class="form-control" name="address" placeholder="{{ ADDRESS }}">
                 </div>
 
                 <div class="col-12">
-                    <label class="form-label">Your Message</label>
-                    <textarea cols="5" rows="5" class="form-control" name="message" placeholder="Your Message"></textarea>
+                    <label class="form-label">{{ MESSAGE }}</label>
+                    <textarea cols="5" rows="5" class="form-control" name="message" placeholder="{{ YOUR_MESSAGE }}"></textarea>
                 </div>
 
-
                 <div class="col-12 text-center">
-                    <button type="submit" class="submit_btn">Submit Your Request</button>
+                    <button type="submit" class="submit_btn">{{ SUBMIT_YOUR_REQUEST }}</button>
                 </div>
           </form>
 
@@ -221,7 +222,7 @@
    </div>
    <div class="row">
     <div class="col-12 text-center">
-        <a class="more" href="#">More Insprations</a>
+        <a class="more" href="#">{{ MORE_INSPRATIONS }}</a>
     </div>
 </div>
 </section>

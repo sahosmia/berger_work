@@ -62,42 +62,49 @@
         </a><!-- br-menu-link -->
         <a href="{{ route('admin.slider') }}" class="br-menu-link @yield('slider')">
           <div class="br-menu-item">
-            <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+            <i class="menu-item-icon icon ion-easel tx-24"></i>
             <span class="menu-item-label">Slider</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
 
         <a href="{{ route('admin.portfolio') }}" class="br-menu-link @yield('portfolio')">
           <div class="br-menu-item">
-            <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+            <i class="menu-item-icon icon ion-image tx-24"></i>
             <span class="menu-item-label">Portfolio</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
 
         <a href="{{ route('admin.diarie') }}" class="br-menu-link @yield('diarie')">
           <div class="br-menu-item">
-            <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+            <i class="menu-item-icon icon ion-ios-medkit-outline tx-24"></i>
             <span class="menu-item-label">Service</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
 
         <a href="{{ route('admin.social') }}" class="br-menu-link @yield('social')">
           <div class="br-menu-item">
-            <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+            <i class="menu-item-icon icon ion-link tx-24"></i>
             <span class="menu-item-label">Social</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
 
         <a href="{{ route('admin.counter') }}" class="br-menu-link @yield('counter')">
           <div class="br-menu-item">
-            <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+            <i class="menu-item-icon icon ion-ios-clock-outline tx-24"></i>
             <span class="menu-item-label">Counter</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
         <a href="{{ route('admin.language') }}" class="br-menu-link @yield('language')">
           <div class="br-menu-item">
-            <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+            <i class="menu-item-icon icon ion-document-text tx-24"></i>
             <span class="menu-item-label">Language</span>
+          </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+
+        <a href="{{ route('admin.edit_profile') }}" class="br-menu-link @yield('edit_profile')">
+          <div class="br-menu-item">
+            <i class="menu-item-icon icon ion-ios-compose-outline tx-24"></i>
+            <span class="menu-item-label">Profile Edit</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
 
@@ -126,9 +133,15 @@
             </a>
             <div class="dropdown-menu dropdown-menu-header wd-200">
               <ul class="list-unstyled user-profile-nav">
-                <li><a href=""><i class="icon ion-ios-person"></i> Edit Profile</a></li>
-                <li><a href=""><i class="icon ion-power"></i> Sign Out</a></li>
-              </ul>
+                <li><a href="{{ route('admin.edit_profile') }}"><i class="icon ion-ios-person"></i> Edit Profile</a></li>
+                <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();"><i class="icon ion-power"></i> Sign Out</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                     </form>
+                </li>
+
+      </ul>
             </div><!-- dropdown-menu -->
           </div><!-- dropdown -->
         </nav>
