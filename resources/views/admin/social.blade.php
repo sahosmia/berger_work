@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('diarie')
+@section('social')
 active
 @endsection
 
@@ -12,7 +12,7 @@ active
     @endif
 
     @php
-        $all_fild = ['title', 'content', 'img',];
+        $all_fild = ['Facebbok','Instragram', 'Youtube', 'Twitter', 'Linkedin'];
     @endphp
 
     @foreach ($all_fild as $item)
@@ -27,19 +27,19 @@ active
             <h4>Add Item</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.diarie_store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.social_update') }}" method="post">
                 @csrf
 
-                <label>Title</label>
-                <input class="form-control"  type="text" name="title" value="{{ old('title') }}">
+                @foreach ($socials as $item)
+                <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">{{ $item->social_name }}</label>
+                    <div class="col-sm-12 col-md-7">
+                        <input type="text" class="form-control" name="social[{{ $item->social_name }}]" value="{{ $item->social_value }}">
+                    </div>
+                </div>
 
-                <label>Content</label>
-                <textarea class="form-control" rows="5" type="text" name="content">{{ old('content') }}</textarea>
+                @endforeach
 
-                <label class="custom-file mt-4">
-                    <input type="file" id="file" name="img" class="custom-file-input">
-                    <span class="custom-file-control"></span>
-                </label>
 
                 <button type="submit" class="btn btn-teal d-block mt-4">Submit</button>
             </form>

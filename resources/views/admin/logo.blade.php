@@ -27,7 +27,7 @@ active
             <h4>Update Item</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('logo_update') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.logo_update') }}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <input type="hidden" name="id" value="{{ $data->id }}">

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('diarie')
+@section('counter')
 active
 @endsection
 
@@ -12,7 +12,7 @@ active
     @endif
 
     @php
-        $all_fild = ['title', 'content', 'img',];
+        $all_fild = ['counter_num', 'counter_title',];
     @endphp
 
     @foreach ($all_fild as $item)
@@ -27,24 +27,15 @@ active
             <h4>Add Item</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.diarie_update') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.counter_update') }}" method="post" enctype="multipart/form-data">
                 @csrf
-
                 <input type="hidden" name="id" value="{{ $data->id }}">
 
-                <label>Title</label>
-                <input class="form-control"  type="text" name="title" value="{{ $data->title }}">
+                <label class="pt-3">Title</label>
+                <input class="form-control"  type="text" name="counter_title" value="{{ $data->counter_title }}">
 
-                <label>Content</label>
-                <textarea class="form-control" rows="5" type="text" name="content">{{ $data->content }}</textarea>
-
-                <label>Existing Photo</label>
-                <img class="w-25 d-block" src="{{ asset('uploads/diarie') }}/{{ $data->img }}" alt="{{ $data->img }}">
-
-                <label class="custom-file mt-4">
-                    <input type="file" id="file" name="img" class="custom-file-input">
-                    <span class="custom-file-control"></span>
-                </label>
+                <label class="pt-3">Number</label>
+                <input class="form-control"  type="number" name="counter_num" value="{{ $data->counter_num }}">
 
                 <button type="submit" class="btn btn-teal d-block mt-4">Submit</button>
             </form>

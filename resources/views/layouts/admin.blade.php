@@ -54,28 +54,50 @@
             <span class="menu-item-label">Dashboard</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
-        <a href="{{ route('logo') }}" class="br-menu-link @yield('logo')">
+        <a href="{{ route('admin.logo') }}" class="br-menu-link @yield('logo')">
           <div class="br-menu-item">
             <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
             <span class="menu-item-label">Logo</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
-        <a href="{{ route('slider') }}" class="br-menu-link @yield('slider')">
+        <a href="{{ route('admin.slider') }}" class="br-menu-link @yield('slider')">
           <div class="br-menu-item">
             <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
             <span class="menu-item-label">Slider</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
-        <a href="{{ route('portfolio') }}" class="br-menu-link @yield('portfolio')">
+
+        <a href="{{ route('admin.portfolio') }}" class="br-menu-link @yield('portfolio')">
           <div class="br-menu-item">
             <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
             <span class="menu-item-label">Portfolio</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
-        <a href="{{ route('diarie') }}" class="br-menu-link @yield('diarie')">
+
+        <a href="{{ route('admin.diarie') }}" class="br-menu-link @yield('diarie')">
           <div class="br-menu-item">
             <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
-            <span class="menu-item-label">Diarie</span>
+            <span class="menu-item-label">Service</span>
+          </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+
+        <a href="{{ route('admin.social') }}" class="br-menu-link @yield('social')">
+          <div class="br-menu-item">
+            <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+            <span class="menu-item-label">Social</span>
+          </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+
+        <a href="{{ route('admin.counter') }}" class="br-menu-link @yield('counter')">
+          <div class="br-menu-item">
+            <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+            <span class="menu-item-label">Counter</span>
+          </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+        <a href="{{ route('admin.language') }}" class="br-menu-link @yield('language')">
+          <div class="br-menu-item">
+            <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+            <span class="menu-item-label">Language</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
 

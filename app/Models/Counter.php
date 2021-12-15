@@ -5,15 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Slider extends Model
+class Counter extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'img',
-        'title',
-        'heading',
-        'btn_text',
-        'btn_url',
-        'action',
+        'counter_num',
+        'counter_title',
     ];
 }

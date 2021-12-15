@@ -30,10 +30,10 @@ active
                  @forelse ($data as $key => $item)
                  <tr>
                     <th>{{ $data->firstItem()+$key }}</th>
-                    <th><img class="w-25" src="{{ asset('uploads/portfolio') }}/{{ $item->img }}" alt="{{ $item->img }}"></th>
+                    <th style="width: 400px"><img class="w-75" src="{{ asset('uploads/portfolio') }}/{{ $item->img }}" alt="{{ $item->img }}"></th>
                     <th>{{ $item->title }}</th>
                     <th><div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="{{ url('portfolio_edit') }}/{{ $item->id }}" class="btn btn-warning pd-x-25"><i class="fa fa-edit"></i></a>
+                        <a href="{{ url('admin/portfolio_edit') }}/{{ $item->id }}" class="btn btn-warning pd-x-25"><i class="fa fa-edit"></i></a>
                       </div>
                     </th>
                 </tr>

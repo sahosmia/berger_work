@@ -12,7 +12,7 @@ active
     @endif
 
     @php
-        $all_fild = ['img',];
+        $all_fild = ['title', 'heading', 'btn_text', 'btn_url', 'img',];
     @endphp
 
     @foreach ($all_fild as $item)
@@ -27,12 +27,24 @@ active
             <h4>Add Item</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('slider_update') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.slider_update') }}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <input type="hidden" name="id" value="{{ $data->id }}">
 
-                <label>Existing Photo</label>
+                <label class="pt-3">Title</label>
+                <input class="form-control"  type="text" name="title" value="{{ $data->title }}">
+
+                <label class="pt-3">Heading</label>
+                <input class="form-control"  type="text" name="heading" value="{{ $data->heading }}">
+
+                <label class="pt-3">Button Text</label>
+                <input class="form-control"  type="text" name="btn_text" value="{{ $data->btn_text }}">
+
+                <label class="pt-3">Button URL</label>
+                <input class="form-control"  type="text" name="btn_url" value="{{ $data->btn_url }}">
+
+                <label class="pt-3">Existing Photo</label>
                 <img class="w-25 d-block" src="{{ asset('uploads/slider') }}/{{ $data->img }}" alt="{{ $data->img }}">
 
                 <label class="custom-file mt-4">

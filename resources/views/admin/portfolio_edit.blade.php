@@ -27,7 +27,7 @@ active
             <h4>Add Item</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('portfolio_update') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.portfolio_update') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id" value="{{ $data->id }}">
 

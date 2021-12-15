@@ -50,10 +50,18 @@ class SliderController extends Controller
     {
         $req->validate([
             'img' => 'required|file|image|mimes:jpeg,jpg,png',
+            'title' => 'required',
+            'heading' => 'required',
+            'btn_text' => 'required',
+            'btn_url' => 'required',
         ]);
 
 
         $id = Slider::insertGetId([
+            'title' => $req->title,
+            'heading' => $req->heading,
+            'btn_text' => $req->btn_text,
+            'btn_url' => $req->btn_url,
             'created_at' => Carbon::now(),
         ]);
 
@@ -77,21 +85,40 @@ class SliderController extends Controller
 
         $photo = $req->file('img');
 
+
         $req->validate([
-            'img' => 'required|file|image|mimes:jpeg,jpg,png',
+            'title' => 'required',
+            'heading' => 'required',
+            'btn_text' => 'required',
+            'btn_url' => 'required',
         ]);
 
-        $old_photo_name = Slider::find($id)->img;
-        unlink('uploads/slider/' . $old_photo_name);
-
-        $photo_extention = $photo->getClientOriginalExtension();
-        $photo_name = 'slider_'. $id . "." . $photo_extention;
-        Image::make($photo)->save(base_path('public/uploads/slider/' . $photo_name));
+        if($photo){
+            $req->validate([
+                'img' => 'required|file|image|mimes:jpeg,jpg,png',
+            ]);
+        }
 
         Slider::find($id)->update([
-            'img' => $photo_name,
+            'title' => $req->title,
+            'heading' => $req->heading,
+            'btn_text' => $req->btn_text,
+            'btn_url' => $req->btn_url,
         ]);
 
+        // photo update
+        if($photo){
+            $old_photo_name = Slider::find($id)->img;
+            unlink('uploads/slider/' . $old_photo_name);
+
+            $photo_extention = $photo->getClientOriginalExtension();
+            $photo_name = 'slider_'. $id . "." . $photo_extention;
+            Image::make($photo)->save(base_path('public/uploads/slider/' . $photo_name));
+
+            Slider::find($id)->update([
+                'img' => $photo_name,
+            ]);
+        }
 
         return back()->with('success', 'Data is updated Successfully');
     }
