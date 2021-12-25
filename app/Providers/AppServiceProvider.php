@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Diarie;
 use App\Models\Language;
+use App\Models\Page;
 use App\Models\Social;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -49,6 +50,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             $view->with('social', Social::where('social_value', '!=', '')->get());
             $view->with('diarie', Diarie::where('action', 1)->get());
+            $view->with('page', Page::find(1));
          });
     }
 }

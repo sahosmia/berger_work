@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DiarieController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\LogoController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PortfolioController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SliderController;
@@ -11,18 +12,6 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SocialController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 
 Auth::routes();
 
@@ -45,8 +34,6 @@ Route::post('/admin/profile_email_update', [ProfileController::class, 'profile_e
 Route::post('/admin/profile_password_update', [ProfileController::class, 'profile_password_update'])->name('admin.profile_password_update');
 
 
-
-
 // logo
 Route::get('/admin/logo', [LogoController::class, 'index'])->name('admin.logo');
 Route::post('/admin/logo_update', [LogoController::class, 'update'])->name('admin.logo_update');
@@ -60,6 +47,7 @@ Route::post('/admin/slider_store', [SliderController::class, 'store'])->name('ad
 Route::post('/admin/slider_update', [SliderController::class, 'update'])->name('admin.slider_update');
 Route::get('/admin/slider_delete/{id}', [SliderController::class, 'delete'])->name('admin.slider_delete');
 Route::get('/admin/slider_action/{id}', [SliderController::class, 'action'])->name('admin.slider_action');
+
 
 // portfolio
 Route::get('/admin/portfolio', [PortfolioController::class, 'index'])->name('admin.portfolio');
@@ -82,7 +70,6 @@ Route::get('/admin/language', [LanguageController::class, 'index'])->name('admin
 Route::post('/admin/language_update', [LanguageController::class, 'language_update'])->name('admin.language_update');
 
 
-
 // Social
 Route::get('admin/social', [SocialController::class, 'index'])->name('admin.social');
 Route::post('admin/socail/social_update', [SocialController::class, 'social_update'])->name('admin.social_update');
@@ -92,3 +79,13 @@ Route::get('admin/counter', [CounterController::class, 'index'])->name('admin.co
 Route::get('/admin/counter_edit/{id}', [CounterController::class, 'edit']);
 Route::post('admin/counter/counter_update', [CounterController::class, 'counter_update'])->name('admin.counter_update');
 
+
+// Page
+Route::get('admin/home_page', [PageController::class, 'home_page'])->name('admin.home_page');
+Route::get('admin/contact_page', [PageController::class, 'contact_page'])->name('admin.contact_page');
+Route::get('admin/corporate_speech', [PageController::class, 'corporate_speech'])->name('admin.corporate_speech');
+
+Route::post('admin/home_page_update', [PageController::class, 'home_page_update'])->name('admin.home_page_update');
+Route::post('admin/contact_page_update', [PageController::class, 'contact_page_update'])->name('admin.contact_page_update');
+Route::post('admin/md_speech_update', [PageController::class, 'md_speech_update'])->name('admin.md_speech_update');
+Route::post('admin/chairman_speech_update', [PageController::class, 'chairman_speech_update'])->name('admin.chairman_speech_update');

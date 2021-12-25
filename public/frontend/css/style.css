@@ -12,6 +12,7 @@ body {
     color: #333;
     overflow-x: hidden;
     font-size: 15px;
+    background: #f7f7f7;
 }
 
 ul,
@@ -600,7 +601,7 @@ button:not(:disabled) {
     margin-top: 70px;
 }
 
-.page_header {
+.card_header {
     width: 100%;
     height: auto;
     overflow: hidden;
@@ -615,11 +616,19 @@ button:not(:disabled) {
     color: #00adef;
 }
 
-.page_contact {
+.card_header h1 {
+    font-size: 35px;
+}
+
+.card_body {
     background-color: #fff;
     border-radius: 10px;
     -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
     margin-bottom: 1rem;
-    padding: 5rem 3rem;
+    padding: 4rem 1.5rem;
+}
+
+.contact_page_logo {
+    margin-top: 100px;
 }

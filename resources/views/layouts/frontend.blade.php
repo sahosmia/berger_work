@@ -1,8 +1,4 @@
 
-@php
-    $logo = App\Models\Logo::find(1);
-
-@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,63 +23,61 @@
 <body>
     <header class="nav_area">
       <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="navber">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="navber">
 
-                        <div class="logo">
-                            <a href="#"><img src="{{ asset('uploads/logo') }}/{{ $logo->logo }}" alt="header_logo"></a>
+                    <div class="logo">
+                        <a href="#"><img src="{{ asset('uploads/logo') }}/{{ $page->logo }}" alt="header_logo"></a>
+                    </div>
+
+                    <div class="menu">
+                        <ul>
+                            <li><a class="@yield('home')" href="{{ route('front') }}">{{ HOME }}</a></li>
+                            <li><a href="#">{{ SERVICE }}</a>
+                                <ul class="drop_down">
+                                    @foreach ($diarie as $item)
+                                    <li><a href="#">{{ $item->title }}</a></li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                            <li><a class="@yield('portfolio')" href="">{{ PORTFOLIO }}</a></li>
+                            <li><a class="@yield('corporate_speech')" href="#">{{ CORPORATE_SPEECH }}</a>
+                                <ul class="drop_down">
+                                    <li><a href="{{ route('md_speech') }}">{{ MD_SPEECH }}</a></li>
+                                    <li><a href="{{ route('chairman_speech') }}">{{ CHAIRMAN_SPEECH }}</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="@yield('gallery')" href="{{ route('gallery') }}">{{ GALLERY }}</a></li>
+                            <li><a class="@yield('about')" href="{{ route('about') }}">{{ ABOUT }}</a></li>
+                            <li><a class="@yield('contact_us')" href="{{ route('contact_us') }}">{{ CONTACT_US }}</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="search_btn">
+                        <i class="fas fa-search"></i>
+                        <div class="search_input">
+                            <form>
+                                <input type="text" placeholder="{{ SEARCH }}">
+                            </form>
                         </div>
-
-                        <div class="menu">
-                            <ul>
-                                <li><a class="@yield('home')" href="#">{{ HOME }}</a></li>
-                                <li><a href="#">{{ SERVICE }}</a>
-                                    <ul class="drop_down">
-                                        @foreach ($diarie as $item)
-                                        <li><a href="#">{{ $item->title }}</a></li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                                <li><a class="@yield('portfolio')" href="">{{ PORTFOLIO }}</a></li>
-                                <li><a class="@yield('corporate_speech')" href="#">{{ CORPORATE_SPEECH }}</a>
-                                    <ul class="drop_down">
-                                        <li><a href="{{ route('md_speech') }}">{{ MD_SPEECH }}</a></li>
-                                        <li><a href="{{ route('chairman_speech') }}">{{ CHAIRMAN_SPEECH }}</a></li>
-                                    </ul>
-                                </li>
-                                <li><a class="@yield('gallery')" href="{{ route('gallery') }}">{{ GALLERY }}</a></li>
-                                <li><a class="@yield('about')" href="{{ route('about') }}">{{ ABOUT }}</a></li>
-                                <li><a class="@yield('contact_us')" href="{{ route('contact_us') }}">{{ CONTACT_US }}</a></li>
-                            </ul>
-                        </div>
-
-						<div class="search_btn">
-							<i class="fas fa-search"></i>
-                            <div class="search_input">
-                                <form>
-                                    <input type="text" placeholder="{{ SEARCH }}">
-                                </form>
-                            </div>
-						</div>
                     </div>
                 </div>
             </div>
-
+        </div>
       </div>
-
-
     </header>
 
 
     @yield('content')
+
+
     <!-- footer start  -->
     <footer class="footer">
-
         <div class="container">
             <div class="row footer_content">
                 <div class="col-lg-3 col-sm-6 col-xm-12">
-                    <img src="{{ asset('uploads/logo') }}/{{ $logo->logo }}" alt="header_logo">
+                    <img src="{{ asset('uploads/logo') }}/{{ $page->logo }}" alt="header_logo">
                     <h4 class="footer_title">{{ STAY_CONNECTED_WITH_US }}</h4>
                     <p>{{ SUBSCRIBE_TO_STAY_UPDATED }}</p>
                     <input class="input" type="text" placeholder="Enter Your Email Address">
@@ -97,7 +91,7 @@
                         <li><a href="#">History and Milestones</a></li>
                         <li><a href="#">Message from MD</a></li>
                         <li><a href="#">Subsidiary Information</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="{{ route('contact_us') }}">{{ CONTACT_US }}</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-xm-12">
@@ -131,32 +125,18 @@
                         @foreach ($social as $item)
                         <li><a href="{{ $item->social_value }}"><i class="{{ $item->social_icon }}"></i></a></li>
                         @endforeach
-
                     </ul>
                 </div>
 
                 <div class="col-lg-6  text-end">
-                    <p class=" d-inline">{{ FOOTER_COPY }}</p>
+                    <p class=" d-inline">{{ $page->copywrite }}</p>
                     <p class=" d-inline">{{ DEVELOPED_BY }} <a href="#">KAZ Software</a></p>
                 </div>
             </div>
         </div>
+    </footer>
 
 
-</footer>
-
-<!-- Messenger Chat Plugin Code -->
-<div id="fb-root"></div>
-
-<!-- Your Chat Plugin code -->
-<div id="fb-customer-chat" class="fb-customerchat">
-</div>
-
-<script>
-  var chatbox = document.getElementById('fb-customer-chat');
-  chatbox.setAttribute("page_id", "112902083776297");
-  chatbox.setAttribute("attribution", "biz_inbox");
-</script>
 
 <!-- Your SDK code -->
 <script>

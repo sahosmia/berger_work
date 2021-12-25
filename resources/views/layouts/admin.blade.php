@@ -36,7 +36,7 @@
     <link href="{{ asset('admin/lib/Ionicons/css/ionicons.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/lib/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/lib/jquery-switchbutton/jquery.switchButton.css') }}" rel="stylesheet">
-
+<link rel="stylesheet" href="{{ asset('admin/lib/summernote/summernote.css') }}">
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="{{ asset('admin/css/bracket.css') }}">
   </head>
@@ -54,18 +54,28 @@
             <span class="menu-item-label">Dashboard</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
-        <a href="{{ route('admin.logo') }}" class="br-menu-link @yield('logo')">
-          <div class="br-menu-item">
-            <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
-            <span class="menu-item-label">Logo</span>
-          </div><!-- menu-item -->
-        </a><!-- br-menu-link -->
+        
+        <a href="#" class="br-menu-link @yield('page_setting') @yield('page_setting_show')">
+            <div class="br-menu-item">
+              <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+              <span class="menu-item-label">Page Setting</span>
+              <i class="menu-item-arrow fa fa-angle-down"></i>
+            </div><!-- menu-item -->
+          </a><!-- br-menu-link -->
+          <ul class="br-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{ route('admin.home_page') }}" class="nav-link @yield('home_page')">Home Page</a></li>
+            <li class="nav-item"><a href="{{ route('admin.contact_page') }}" class="nav-link @yield('contact_page')">Contact Page</a></li>
+            <li class="nav-item"><a href="{{ route('admin.corporate_speech') }}" class="nav-link @yield('corporate_speech_page')">Corporate Speech Page</a></li>
+          </ul>
+
+
         <a href="{{ route('admin.slider') }}" class="br-menu-link @yield('slider')">
           <div class="br-menu-item">
             <i class="menu-item-icon icon ion-easel tx-24"></i>
             <span class="menu-item-label">Slider</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
+
 
         <a href="{{ route('admin.portfolio') }}" class="br-menu-link @yield('portfolio')">
           <div class="br-menu-item">
@@ -171,7 +181,8 @@
     <script src="{{ asset('admin/lib/jquery-ui/jquery-ui.js') }}"></script>
     <script src="{{ asset('admin/lib/jquery-switchbutton/jquery.switchButton.js') }}"></script>
     <script src="{{ asset('admin/lib/peity/jquery.peity.js') }}"></script>
-
+    <script src="{{ asset('admin/lib/summernote/summernote.min.js') }}"></script>
+@yield('exta_js')
     <script src="{{ asset('admin/js/bracket.js') }}"></script>
   </body>
 </html>
