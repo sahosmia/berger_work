@@ -4,20 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Counter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
 
 class CounterController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-
-
     // index
     public function index()
     {
-        return view('admin.counter', [
+        return view('admin.counter.index', [
             'data' => Counter::paginate(12),
         ]);
     }
@@ -26,28 +21,29 @@ class CounterController extends Controller
     // edit
     public function edit($id)
     {
-        return view('admin.counter_edit', [
+        return view('admin.counter.edit', [
             'data' => Counter::find($id),
         ]);
     }
 
 
     // update
-    public function counter_update(Request $req)
+    public function update(Request $request, $id)
     {
-        $id = $req->id;
-        $req->validate([
+        $request->validate([
             'counter_title' => 'required',
             'counter_num' => 'required',
         ]);
 
-        Counter::find($id)->update([
-            'counter_title' => $req->counter_title,
-            'counter_num' => $req->counter_num,
-        ]);
+        $inputs = $request->only('counter_title', 'counter_num');
 
-        return back()->with('success', 'Data is updated Successfully');
+        try {
+            Counter::find($id)->update($inputs);
+            Session::flash('success', 'Record updated successfully');
+            return redirect()->route('admin.counters.index');
+        } catch (\Exception $exception) {
+            Session::flash('error', $exception->getMessage());
+            return redirect()->back();
+        }
     }
-
-
 }

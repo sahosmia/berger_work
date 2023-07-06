@@ -13,23 +13,7 @@ active
 
 @section('content')
 <div class="col-lg-6 m-auto">
-    @if (session()->has('success'))
-    <div class="alert alert-success">
-        <p>{{ session()->get('success') }}</p>
-    </div>
-    @endif
-
-    @php
-        $all_fild = ['portfolio_title', 'portfolio_content', 'diarie_title', 'diarie_content', 'copywrite', 'logo', 'contact_head_logo', 'contact_bg'];
-    @endphp
-
-    @foreach ($all_fild as $item)
-        @error($item)
-            <div class="alert alert-danger">
-                <p>{{ $message }}</p>
-            </div>
-        @enderror
-    @endforeach
+     @include("layouts.status")
     <div class="card">
         <div class="card-header text-center bg-teal text-light">
             <h4>Home Page Item</h4>

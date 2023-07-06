@@ -6,19 +6,7 @@ active
 @section('content')
 <div class="col-lg-6 m-auto">
 
-    @if (session()->has('success'))
-    <div class="alert alert-success">
-        <p>{{ session()->get('success') }}</p>
-    </div>
-    @endif
-
-    @foreach ($language as $item)
-        @error($item->lang_name)
-            <div class="alert alert-danger">
-                <p>{{ $message }}</p>
-            </div>
-        @enderror
-    @endforeach
+     @include("layouts.status")
 
 
     <div class="card ">

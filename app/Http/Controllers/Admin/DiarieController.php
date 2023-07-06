@@ -4,42 +4,38 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Diarie;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Image;
 
 
+
 class DiarieController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
 
 
     // index
     public function index()
     {
-        return view('admin.diarie', [
+        return view('admin.diarie.index', [
             'data' => Diarie::paginate(12),
         ]);
     }
 
 
 
-    // index
-    public function add()
+    // Create
+    public function create()
     {
-        return view('admin.diarie_add');
+        return view('admin.diarie.create');
     }
 
 
 
-    // index
+    // Edit
     public function edit($id)
     {
-        return view('admin.diarie_edit', [
+        return view('admin.diarie.edit', [
             'data' => Diarie::find($id),
         ]);
     }
@@ -47,94 +43,75 @@ class DiarieController extends Controller
 
 
     // store
-    public function store(Request $req)
+    public function store(Request $request)
     {
-        $req->validate([
+        $request->validate([
             'title' => 'required',
             'content' => 'required',
             'img' => 'required|file|image|mimes:jpeg,jpg,png',
         ]);
 
+        $inputs = $request->only('title', 'content');
 
-        $id = Diarie::insertGetId([
-            'title' => $req->title,
-            'content' => $req->content,
-            'created_at' => Carbon::now(),
-        ]);
+        if ($request->hasFile('img')) {
+            $image = Image::make($request->file('img'));
+            $imageName = 'diarie-' . time() . '.' . $request->file('img')->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/diarie/');
+            // $image->resize(600, 400);
+            $image->save($destinationPath . $imageName);
+            $inputs['img'] = $imageName;
+        }
 
-        $photo = $req->file('img');
-        $photo_extention = $photo->getClientOriginalExtension();
-        $photo_name = 'diarie_'. $id . "." . $photo_extention;
-        Image::make($photo)->save(base_path('public/uploads/diarie/' . $photo_name));
-
-        Diarie::find($id)->update([
-            'img' => $photo_name,
-        ]);
-
-        return back()->with('success', 'Data is inserted Successfully');
+        try {
+            Diarie::create($inputs);
+            Session::flash('success', 'Record create successfully');
+            return redirect()->route('admin.diaries.index');
+        } catch (\Exception $exception) {
+            Session::flash('error', $exception->getMessage());
+            return redirect()->back();
+        }
     }
 
 
     // update
-    public function update(Request $req)
+    public function update(Request $request, $id)
     {
-        $id = $req->id;
-        $req->validate([
+        $request->validate([
             'title' => 'required',
             'content' => 'required',
         ]);
 
-        Diarie::find($id)->update([
-            'title' => $req->title,
-            'content' => $req->content,
-        ]);
+        $inputs = $request->only('title', 'content');
 
+        if ($request->hasFile('img')) {
 
-        $photo = $req->file('img');
+            $currentImage = Diarie::find($id)->img;
+            unlink(public_path('uploads/diarie/' . $currentImage));
 
-        if ($photo) {
-            $req->validate([
-                'img' => 'required|file|image|mimes:jpeg,jpg,png',
-            ]);
-
-            $old_photo_name = Diarie::find($id)->img;
-            unlink('uploads/diarie/' . $old_photo_name);
-
-            $photo_extention = $photo->getClientOriginalExtension();
-            $photo_name = 'diarie_'. $id . "." . $photo_extention;
-            Image::make($photo)->save(base_path('public/uploads/diarie/' . $photo_name));
-
-            Diarie::find($id)->update([
-                'img' => $photo_name,
-            ]);
+            $image = Image::make($request->file('img'));
+            $imageName = 'diarie-' . time() . '.' . $request->file('img')->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/diarie/');
+            // $image->resize(600, 400);
+            $image->save($destinationPath . $imageName);
+            $inputs['img'] = $imageName;
         }
 
-        return back()->with('success', 'Data is updated Successfully');
+        try {
+            Diarie::findorFail($id)->update($inputs);
+            Session::flash('success', 'Record updated successfully');
+            return redirect()->route('admin.diaries.index');
+        } catch (\Exception $exception) {
+            Session::flash('error', $exception->getMessage());
+            return redirect()->back();
+        }
     }
 
     // delete
-    public function delete($id)
+    public function destroy($id)
     {
-        $photo = Diarie::find($id)->img;
-        unlink('uploads/diarie/' . $photo);
-        Diarie::find($id)->forceDelete();
+        $data = Diarie::findOrFail($id);
+        unlink('uploads/diarie/' . $data->img);
+        $data->forceDelete();
         return back()->with('success', 'Data is deleted Successfully');
-    }
-
-
-    // action
-    public function action($id)
-    {
-        if(Diarie::find($id)->action == 1){
-            Diarie::find($id)->update([
-                'action' => 2,
-            ]);
-        }else{
-            Diarie::find($id)->update([
-                'action' => 1,
-            ]);
-        }
-
-        return back()->with('success', 'Data Updated Successfully');
     }
 }

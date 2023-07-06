@@ -5,50 +5,46 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Image;
 
 class SliderController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
 
 
     // index
     public function index()
     {
-        return view('admin.slider', [
+        return view('admin.slider.index', [
             'data' => Slider::paginate(12),
         ]);
     }
 
 
 
-    // index
-    public function add()
+    // Create
+    public function create()
     {
-        return view('admin.slider_add');
+        return view('admin.slider.create');
     }
 
 
 
-    // index
+    // Edit
     public function edit($id)
     {
-        return view('admin.slider_edit', [
-            'data' => Slider::find($id),
+        return view('admin.slider.edit', [
+            'data' => Slider::findOrFail($id),
         ]);
     }
 
 
 
     // store
-    public function store(Request $req)
+    public function store(Request $request)
     {
-        $req->validate([
+        $request->validate([
             'img' => 'required|file|image|mimes:jpeg,jpg,png',
             'title' => 'required',
             'heading' => 'required',
@@ -56,96 +52,69 @@ class SliderController extends Controller
             'btn_url' => 'required',
         ]);
 
+        $inputs = $request->only('title', 'heading', 'btn_text', 'btn_url');
 
-        $id = Slider::insertGetId([
-            'title' => $req->title,
-            'heading' => $req->heading,
-            'btn_text' => $req->btn_text,
-            'btn_url' => $req->btn_url,
-            'created_at' => Carbon::now(),
-        ]);
+        if ($request->hasFile('img')) {
+            $image = Image::make($request->file('img'));
+            $imageName = 'slider-' . time() . '.' . $request->file('img')->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/slider/');
+            // $image->resize(600, 400);
+            $image->save($destinationPath . $imageName);
+            $inputs['img'] = $imageName;
+        }
 
-        $photo = $req->file('img');
-        $photo_extention = $photo->getClientOriginalExtension();
-        $photo_name = 'slider_'. $id . "." . $photo_extention;
-        Image::make($photo)->save(base_path('public/uploads/slider/' . $photo_name));
-
-        Slider::find($id)->update([
-            'img' => $photo_name,
-        ]);
-
-        return back()->with('success', 'Data is inserted Successfully');
+        try {
+            Slider::create($inputs);
+            Session::flash('success', 'Record create successfully');
+            return redirect()->route('admin.sliders.index');
+        } catch (\Exception $exception) {
+            Session::flash('error', $exception->getMessage());
+            return redirect()->back();
+        }
     }
 
 
     // update
-    public function update(Request $req)
+    public function update(Request $request, $id)
     {
-        $id = $req->id;
-
-        $photo = $req->file('img');
-
-
-        $req->validate([
+        $request->validate([
             'title' => 'required',
             'heading' => 'required',
             'btn_text' => 'required',
             'btn_url' => 'required',
         ]);
 
-        if($photo){
-            $req->validate([
-                'img' => 'required|file|image|mimes:jpeg,jpg,png',
-            ]);
+        $inputs = $request->only('title', 'heading', 'btn_text', 'btn_url');
+
+        if ($request->hasFile('img')) {
+
+            $currentImage = Slider::find($id)->img;
+            unlink(public_path('uploads/slider/' . $currentImage));
+
+            $image = Image::make($request->file('img'));
+            $imageName = 'slider-' . time() . '.' . $request->file('img')->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/slider/');
+            // $image->resize(600, 400);
+            $image->save($destinationPath . $imageName);
+            $inputs['img'] = $imageName;
         }
 
-        Slider::find($id)->update([
-            'title' => $req->title,
-            'heading' => $req->heading,
-            'btn_text' => $req->btn_text,
-            'btn_url' => $req->btn_url,
-        ]);
-
-        // photo update
-        if($photo){
-            $old_photo_name = Slider::find($id)->img;
-            unlink('uploads/slider/' . $old_photo_name);
-
-            $photo_extention = $photo->getClientOriginalExtension();
-            $photo_name = 'slider_'. $id . "." . $photo_extention;
-            Image::make($photo)->save(base_path('public/uploads/slider/' . $photo_name));
-
-            Slider::find($id)->update([
-                'img' => $photo_name,
-            ]);
+        try {
+            Slider::find($id)->update($inputs);
+            Session::flash('success', 'Record updated successfully');
+            return redirect()->route('admin.sliders.index');
+        } catch (\Exception $exception) {
+            Session::flash('error', $exception->getMessage());
+            return redirect()->back();
         }
-
-        return back()->with('success', 'Data is updated Successfully');
     }
 
     // delete
-    public function delete($id)
+    public function destroy($id)
     {
-        $photo = Slider::find($id)->img;
-        unlink('uploads/slider/' . $photo);
-        Slider::find($id)->forceDelete();
+        $data = Slider::findOrFail($id);
+        unlink('uploads/slider/' . $data->img);
+        $data->forceDelete();
         return back()->with('success', 'Data is deleted Successfully');
-    }
-
-
-    // action
-    public function action($id)
-    {
-        if(Slider::find($id)->action == 1){
-            Slider::find($id)->update([
-                'action' => 2,
-            ]);
-        }else{
-            Slider::find($id)->update([
-                'action' => 1,
-            ]);
-        }
-
-        return back()->with('success', 'Data Updated Successfully');
     }
 }

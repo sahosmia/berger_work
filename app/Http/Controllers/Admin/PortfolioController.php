@@ -6,20 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Portfolio;
 use Illuminate\Http\Request;
 use Image;
+use Illuminate\Support\Facades\Session;
+
 
 class PortfolioController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-
 
     // index
     public function index()
     {
-        return view('admin.portfolio', [
+        return view('admin.portfolio.index', [
             'data' => Portfolio::paginate(12),
         ]);
     }
@@ -28,46 +24,42 @@ class PortfolioController extends Controller
     // edit
     public function edit($id)
     {
-        return view('admin.portfolio_edit', [
-            'data' => Portfolio::find($id),
+        return view('admin.portfolio.edit', [
+            'data' => Portfolio::findOrFail($id),
         ]);
     }
 
 
     // update
-    public function update(Request $req)
+    public function update(Request $request, $id)
     {
-        $id = $req->id;
-        $req->validate([
+        $request->validate([
             'title' => 'required',
         ]);
 
-        Portfolio::find($id)->update([
-            'title' => $req->title,
-        ]);
 
+        $inputs = $request->only('title');
 
-        $photo = $req->file('img');
+        if ($request->hasFile('img')) {
 
-        if ($photo) {
-            $req->validate([
-                'img' => 'required|file|image|mimes:jpeg,jpg,png',
-            ]);
+            $currentImage = Portfolio::find($id)->img;
+            unlink(public_path('uploads/portfolio/' . $currentImage));
 
-            $old_photo_name = portfolio::find($id)->img;
-            unlink('uploads/portfolio/' . $old_photo_name);
-
-            $photo_extention = $photo->getClientOriginalExtension();
-            $photo_name = 'portfolio_'. $id . "." . $photo_extention;
-            Image::make($photo)->save(base_path('public/uploads/portfolio/' . $photo_name));
-
-            Portfolio::find($id)->update([
-                'img' => $photo_name,
-            ]);
+            $image = Image::make($request->file('img'));
+            $imageName = 'portfolio-' . time() . '.' . $request->file('img')->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/portfolio/');
+            // $image->resize(600, 400);
+            $image->save($destinationPath . $imageName);
+            $inputs['img'] = $imageName;
         }
 
-        return back()->with('success', 'Data is updated Successfully');
+        try {
+            Portfolio::find($id)->update($inputs);
+            Session::flash('success', 'Record updated successfully');
+            return redirect()->route('admin.portfolios.index');
+        } catch (\Exception $exception) {
+            Session::flash('error', $exception->getMessage());
+            return redirect()->back();
+        }
     }
-
-
 }

@@ -9,32 +9,24 @@ use App\Models\Social;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
-
 class AppServiceProvider extends ServiceProvider
 {
-
-
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-
         Paginator::useBootstrap();
         $language_text = Language::get();
-        foreach($language_text as $language_all){
+        foreach ($language_text as $language_all) {
             define($language_all->lang_name, $language_all->lang_value);
         }
 
@@ -51,6 +43,6 @@ class AppServiceProvider extends ServiceProvider
             $view->with('social', Social::where('social_value', '!=', '')->get());
             $view->with('diarie', Diarie::where('action', 1)->get());
             $view->with('page', Page::find(1));
-         });
+        });
     }
 }

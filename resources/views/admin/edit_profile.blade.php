@@ -10,11 +10,7 @@ active
 
 <!-- Container-fluid starts-->
 <div class="container-fluid">
-    @if(session('success'))
-    <div class="alert alert-success">
-        {{ (session('success')) }}
-    </div>
-    @endif
+     @include("layouts.status")
 
     <div class="row">
 
